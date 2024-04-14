@@ -4,6 +4,8 @@ import com.ocprojettrois.locationprojettree.Models.Auth.AuthenticationResponse;
 import com.ocprojettrois.locationprojettree.Models.Role.Role;
 import com.ocprojettrois.locationprojettree.Models.Token.Token;
 import com.ocprojettrois.locationprojettree.Models.User.User;
+import com.ocprojettrois.locationprojettree.Models.User.UserDto.LoginRequest;
+import com.ocprojettrois.locationprojettree.Models.User.UserDto.RegisterRequest;
 import com.ocprojettrois.locationprojettree.Repository.Token.TokenRepository;
 import com.ocprojettrois.locationprojettree.Repository.User.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -37,7 +39,7 @@ public class AuthenticationService {
         this.authenticationManager = authenticationManager;
     }
 
-    public AuthenticationResponse register(User request) {
+    public AuthenticationResponse register(RegisterRequest request) {
 
         // check if user already exist. if exist than authenticate the user
         if(repository.findByEmail(request.getEmail()).isPresent()) {
@@ -52,7 +54,6 @@ public class AuthenticationService {
         user.setUpdated_at(date);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
 
-
         user.setRole(Role.USER);
 
         user = repository.save(user);
@@ -65,7 +66,7 @@ public class AuthenticationService {
 
     }
 
-    public AuthenticationResponse authenticate(User request) {
+    public AuthenticationResponse authenticate(LoginRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
@@ -104,6 +105,7 @@ public class AuthenticationService {
 
     public List<User> loadAllUsers() {
         return repository.findAll();
+
     }
 }
 

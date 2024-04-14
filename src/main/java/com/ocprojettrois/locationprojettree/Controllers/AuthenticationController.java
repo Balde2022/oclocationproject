@@ -2,6 +2,8 @@ package com.ocprojettrois.locationprojettree.Controllers;
 
 import com.ocprojettrois.locationprojettree.Models.Auth.AuthenticationResponse;
 import com.ocprojettrois.locationprojettree.Models.User.User;
+import com.ocprojettrois.locationprojettree.Models.User.UserDto.LoginRequest;
+import com.ocprojettrois.locationprojettree.Models.User.UserDto.RegisterRequest;
 import com.ocprojettrois.locationprojettree.Services.Auth.AuthenticationService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -24,14 +26,14 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody User request
+            @RequestBody RegisterRequest request
     ) {
         return ResponseEntity.ok(authService.register(request));
     }
 
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(
-            @RequestBody User request
+            @RequestBody LoginRequest request
     ) {
         return ResponseEntity.ok(authService.authenticate(request));
     }

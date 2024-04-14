@@ -39,40 +39,46 @@ public class User implements UserDetails {
     @Column(insertable = false)
     @JsonFormat(pattern = "yyyy/MM/dd")
     private Date updated_at;
-
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
-
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "user")
     private List<Token> tokens;
 
     @Override
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     public boolean isAccountNonExpired() {
         return true;
     }
 
     @Override
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     public boolean isAccountNonLocked() {
         return true;
     }
 
     @Override
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
     @Override
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     public boolean isEnabled() {
         return true;
     }
 
     @Override
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
     @Override
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     public String getUsername() {
         return email;
     }
