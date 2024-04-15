@@ -5,6 +5,8 @@ import com.ocprojettrois.locationprojettree.Models.User.User;
 import com.ocprojettrois.locationprojettree.Models.User.UserDto.LoginRequest;
 import com.ocprojettrois.locationprojettree.Models.User.UserDto.RegisterRequest;
 import com.ocprojettrois.locationprojettree.Services.Auth.AuthenticationService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +25,20 @@ public class AuthenticationController {
         this.authService = authService;
     }
 
-
+    @Operation(
+            description = "Get endpoint for user register",
+            summary = "Création d'un compte utilisateur ",
+            responses = {
+                    @ApiResponse(
+                            description = "Success",
+                            responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Unauthorized / Invalid Token",
+                            responseCode = "403"
+                    )
+            }
+    )
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
             @RequestBody RegisterRequest request
@@ -31,6 +46,20 @@ public class AuthenticationController {
         return ResponseEntity.ok(authService.register(request));
     }
 
+    @Operation(
+            description = "Get endpoint for user login",
+            summary = "Connexion au compte utilisateur ",
+            responses = {
+                    @ApiResponse(
+                            description = "Success",
+                            responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Unauthorized / Invalid Token",
+                            responseCode = "403"
+                    )
+            }
+    )
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(
             @RequestBody LoginRequest request
@@ -38,6 +67,20 @@ public class AuthenticationController {
         return ResponseEntity.ok(authService.authenticate(request));
     }
 
+    @Operation(
+            description = "Get endpoint for get all users",
+            summary = "Recuperation de l'ensemble des utilisateurs",
+            responses = {
+                    @ApiResponse(
+                            description = "Success",
+                            responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Unauthorized / Invalid Token",
+                            responseCode = "403"
+                    )
+            }
+    )
     @SecurityRequirement(name = "bearerAuth")
     @GetMapping("/me")
     public ResponseEntity<List<User>> me(){
