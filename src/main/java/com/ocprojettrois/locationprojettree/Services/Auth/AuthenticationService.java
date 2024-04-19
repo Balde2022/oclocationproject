@@ -43,7 +43,7 @@ public class AuthenticationService {
 
         // check if user already exist. if exist than authenticate the user
         if(repository.findByEmail(request.getEmail()).isPresent()) {
-            return new AuthenticationResponse(null, "User already exist");
+            return new AuthenticationResponse(null);
         }
 
         User user = new User();
@@ -62,7 +62,7 @@ public class AuthenticationService {
 
         saveUserToken(jwt, user);
 
-        return new AuthenticationResponse(jwt, "User registration was successful");
+        return new AuthenticationResponse(jwt);
 
     }
 
@@ -80,7 +80,7 @@ public class AuthenticationService {
         revokeAllTokenByUser(user);
         saveUserToken(jwt, user);
 
-        return new AuthenticationResponse(jwt, "User login was successful");
+        return new AuthenticationResponse(jwt);
 
     }
     private void revokeAllTokenByUser(User user) {
