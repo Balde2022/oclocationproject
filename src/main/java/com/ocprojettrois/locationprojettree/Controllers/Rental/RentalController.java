@@ -3,15 +3,24 @@ import com.ocprojettrois.locationprojettree.Models.Rental.Dto.CreateRentalDto;
 import com.ocprojettrois.locationprojettree.Models.Rental.Dto.UpdateRentalDto;
 import com.ocprojettrois.locationprojettree.Models.Rental.Rental;
 import com.ocprojettrois.locationprojettree.Models.Rental.RentalResponse;
+import com.ocprojettrois.locationprojettree.Repository.Rental.RentalRepository;
 import com.ocprojettrois.locationprojettree.Services.Rental.RentalService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 
 @RestController
@@ -64,25 +73,6 @@ public class RentalController {
     }
 
     @Operation(
-            description = "Get endpoint for create a rental",
-            summary = "Créer une annonces de location",
-            responses = {
-                    @ApiResponse(
-                            description = "Success",
-                            responseCode = "200"
-                    ),
-                    @ApiResponse(
-                            description = "Unauthorized / Invalid Token",
-                            responseCode = "403"
-                    )
-            }
-    )
-    @PostMapping()
-    public RentalResponse create(CreateRentalDto rental){
-        return rentalService.create(rental);
-    }
-
-    @Operation(
             description = "Get endpoint for updated rental",
             summary = "Mettre a jour une annonce de location",
             responses = {
@@ -99,5 +89,30 @@ public class RentalController {
     @PutMapping("/{id}")
     public RentalResponse update(@PathVariable Long id, UpdateRentalDto rental){
         return rentalService.update(id,rental);
+    }
+
+    @Operation(
+            description = "Get endpoint for create a rental",
+            summary = "Créer une annonces de location",
+            responses = {
+                    @ApiResponse(
+                            description = "Success",
+                            responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Unauthorized / Invalid Token",
+                            responseCode = "403"
+                    )
+            }
+    )
+
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public RentalResponse create(@RequestParam MultipartFile file ,
+                                 String name ,
+                                 Integer surface,
+                                 Integer price,
+                                 String description) throws IOException
+    {
+        return rentalService.create(file , name , surface , price , description);
     }
 }

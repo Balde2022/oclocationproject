@@ -2,6 +2,8 @@ package com.ocprojettrois.locationprojettree.Models.User;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.ocprojettrois.locationprojettree.Models.Message.Message;
+import com.ocprojettrois.locationprojettree.Models.Rental.Rental;
 import com.ocprojettrois.locationprojettree.Models.Role.Role;
 import com.ocprojettrois.locationprojettree.Models.Token.Token;
 import jakarta.persistence.*;

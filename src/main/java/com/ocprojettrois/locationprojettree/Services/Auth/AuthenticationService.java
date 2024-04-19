@@ -105,7 +105,6 @@ public class AuthenticationService {
 
     public List<User> loadAllUsers() {
         return repository.findAll();
-
     }
 }
 

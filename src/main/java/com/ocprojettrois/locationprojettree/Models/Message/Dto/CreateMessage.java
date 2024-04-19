@@ -7,6 +7,6 @@ import lombok.Data;
 @Data
 public class CreateMessage {
     private String message;
-    private User user_id;
-    private Rental rental_id;
+    private Long user_id;
+    private Long rental_id;
 }

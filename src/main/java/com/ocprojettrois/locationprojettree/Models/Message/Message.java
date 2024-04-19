@@ -10,7 +10,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import java.util.Date;
 @Entity
-@Table(name = "user")
+@Table(name = "messages")
 @Data
 public class Message {
     @Id

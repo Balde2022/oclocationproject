@@ -1,17 +1,22 @@
 package com.ocprojettrois.locationprojettree.Services.Rental;
 
 
-import com.ocprojettrois.locationprojettree.Models.Rental.Dto.CreateRentalDto;
 import com.ocprojettrois.locationprojettree.Models.Rental.Dto.UpdateRentalDto;
 import com.ocprojettrois.locationprojettree.Models.Rental.Rental;
 import com.ocprojettrois.locationprojettree.Models.Rental.RentalResponse;
 import com.ocprojettrois.locationprojettree.Repository.Rental.RentalRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -30,13 +35,27 @@ public class RentalServiceImpl implements RentalService {
     }
 
     @Override
-    public RentalResponse create(CreateRentalDto rental) {
+    public RentalResponse create(MultipartFile file ,
+                                 String name ,
+                                 Integer surface,
+                                 Integer price,
+                                 String description) throws IOException {
+        Path path = Paths.get(System.getProperty("user.home"), "rental-images","images");
+        if(!Files.exists(path)){
+            Files.createDirectories(path);
+        }
+
+        String rentalsImagesId = UUID.randomUUID().toString();
+
+        Path filePath = Paths.get(System.getProperty("user.home"), "rental-images","images" ,rentalsImagesId+".jpg" );
+        Files.copy(file.getInputStream(),filePath);
         Rental rentalPush= new Rental();
-        rentalPush.setName(rental.getName());
-        rentalPush.setSurface(rental.getSurface());
-        rentalPush.setPrice(rental.getPrice());
-        rentalPush.setDescription(rental.getDescription());
-        rentalPush.setPicture(rental.getPicture());
+
+        rentalPush.setName(name);
+        rentalPush.setSurface(surface);
+        rentalPush.setPrice(price);
+        rentalPush.setDescription(description);
+        rentalPush.setPicture(filePath.toUri().toString());
         Date date = new Date();
         rentalPush.setCreated_at(date);
         rentalPush.setUpdated_at(date);
@@ -67,5 +86,10 @@ public class RentalServiceImpl implements RentalService {
                     return response;
                 }
         ).orElseThrow();
+    }
+
+    @Override
+    public Optional<Rental> findById(Long id) {
+        return repository.findById(id);
     }
 }

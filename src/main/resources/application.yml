@@ -2,7 +2,7 @@ spring:
   application:
     name: locationprojettree
   datasource:
-    url: jdbc:mysql://localhost:3306/dblocation
+    url: jdbc:mysql://localhost:3306/db_location
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver

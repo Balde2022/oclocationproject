@@ -1,6 +1,7 @@
 package com.ocprojettrois.locationprojettree.Models.Rental;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ocprojettrois.locationprojettree.Models.Message.Message;
 import com.ocprojettrois.locationprojettree.Models.User.User;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -8,6 +9,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.util.Date;
+import java.util.List;
+
 @Entity
 @Data
 @Table(name = "rentals")
