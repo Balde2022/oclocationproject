@@ -10,6 +10,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Data
@@ -30,8 +31,8 @@ public class Rental {
     @Column(nullable = false,updatable = false)
     @JsonFormat(pattern = "yyyy/MM/dd")
     private Date created_at;
-    @LastModifiedDate
-    @Column(insertable = false)
-    @JsonFormat(pattern = "yyyy/MM/dd")
+    //@LastModifiedDate
+    //@Column(insertable = false)
+    //@JsonFormat(pattern = "yyyy/MM/dd")
     private Date updated_at;
 }

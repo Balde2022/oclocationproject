@@ -27,4 +27,7 @@ public class UserDetailsServiceImp implements UserDetailsService {
     public Optional<User> findById(Long id){
         return repository.findById(id);
     }
+
+    public User findByUsername(String email){return repository.findByEmail(email)
+            .orElseThrow(()-> new UsernameNotFoundException("User not found"));}
 }

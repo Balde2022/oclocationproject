@@ -4,8 +4,12 @@ package com.ocprojettrois.locationprojettree.Services.Rental;
 import com.ocprojettrois.locationprojettree.Models.Rental.Dto.UpdateRentalDto;
 import com.ocprojettrois.locationprojettree.Models.Rental.Rental;
 import com.ocprojettrois.locationprojettree.Models.Rental.RentalResponse;
+import com.ocprojettrois.locationprojettree.Models.User.User;
 import com.ocprojettrois.locationprojettree.Repository.Rental.RentalRepository;
+import com.ocprojettrois.locationprojettree.Services.User.UserDetailsServiceImp;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,6 +27,7 @@ import java.util.UUID;
 public class RentalServiceImpl implements RentalService {
 
     private final RentalRepository repository;
+    private final UserDetailsServiceImp userService;
 
     @Override
     public List<Rental> all() {
@@ -59,7 +64,9 @@ public class RentalServiceImpl implements RentalService {
         Date date = new Date();
         rentalPush.setCreated_at(date);
         rentalPush.setUpdated_at(date);
-        rentalPush.setUser(rentalPush.getUser());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findByUsername(auth.getName());
+        rentalPush.setUser(user);
         repository.save(rentalPush);
         RentalResponse response = new RentalResponse();
         response.setMessage("Rental created !");
