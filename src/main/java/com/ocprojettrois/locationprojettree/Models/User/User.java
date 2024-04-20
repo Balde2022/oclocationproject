@@ -37,8 +37,8 @@ public class User implements UserDetails {
     @Column(nullable = false,updatable = false)
     @JsonFormat(pattern = "yyyy/MM/dd")
     private Date created_at;
-    @LastModifiedDate
-    @Column(insertable = false)
+    //@LastModifiedDate
+    //@Column(insertable = false)
     @JsonFormat(pattern = "yyyy/MM/dd")
     private Date updated_at;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

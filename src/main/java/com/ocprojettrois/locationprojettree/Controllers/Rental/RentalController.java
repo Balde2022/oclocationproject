@@ -27,6 +27,7 @@ import java.util.UUID;
 @RequestMapping(path = "/api/rentals")
 @Tag(name = "rentals")
 @SecurityRequirement(name = "bearerAuth")
+@CrossOrigin(origins = "http://localhost:4200")
 public class RentalController {
     private final RentalService rentalService;
 
