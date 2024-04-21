@@ -30,7 +30,6 @@ import java.util.stream.Stream;
 @RequestMapping(path = "/api/rentals")
 @Tag(name = "rentals")
 @SecurityRequirement(name = "bearerAuth")
-@CrossOrigin(origins = "http://localhost:4200")
 public class RentalController {
     private final RentalService rentalService;
 
