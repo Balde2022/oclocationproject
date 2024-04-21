@@ -1,6 +1,8 @@
 package com.ocprojettrois.locationprojettree.Services.Rental;
 
 
+import com.ocprojettrois.locationprojettree.Models.Rental.Dto.RentalResponseDto;
+import com.ocprojettrois.locationprojettree.Models.Rental.Dto.RentalsResponseDto;
 import com.ocprojettrois.locationprojettree.Models.Rental.Dto.UpdateRentalDto;
 import com.ocprojettrois.locationprojettree.Models.Rental.Rental;
 import com.ocprojettrois.locationprojettree.Models.Rental.RentalResponse;
@@ -21,6 +23,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 @Service
 @AllArgsConstructor
@@ -30,13 +33,37 @@ public class RentalServiceImpl implements RentalService {
     private final UserDetailsServiceImp userService;
 
     @Override
-    public List<Rental> all() {
-        return repository.findAll();
+    public Stream<RentalsResponseDto> all() {
+        return repository.findAll().stream().map(rental -> new RentalsResponseDto(
+                rental.getId() ,
+                rental.getName(),
+                rental.getSurface(),
+                rental.getPrice(),
+                rental.getPicture(),
+                rental.getDescription(),
+                rental.getUser().getId(),
+                rental.getCreated_at(),
+                rental.getUpdated_at()
+        ));
     }
 
     @Override
-    public Optional<Rental> detail(Long id) {
-        return repository.findById(id);
+    public RentalResponseDto detail(Long id) {
+
+        Rental rental = repository.findById(id).orElseThrow();
+        RentalResponseDto response = new RentalResponseDto();
+        response.setId(rental.getId());
+        response.setName(rental.getName());
+        response.setSurface(rental.getSurface());
+        response.setPrice(rental.getPrice());
+        response.setPicture(rental.getPicture());
+        response.setDescription(rental.getDescription());
+        User user = new User();
+        user = rental.getUser();
+        response.setOwner_id(user.getId());
+        response.setCreated_at(rental.getCreated_at());
+        response.setUpdated_at(rental.getUpdated_at());
+        return response;
     }
 
     @Override

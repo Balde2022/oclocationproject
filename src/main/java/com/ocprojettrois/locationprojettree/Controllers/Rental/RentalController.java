@@ -1,5 +1,7 @@
 package com.ocprojettrois.locationprojettree.Controllers.Rental;
 import com.ocprojettrois.locationprojettree.Models.Rental.Dto.CreateRentalDto;
+import com.ocprojettrois.locationprojettree.Models.Rental.Dto.RentalResponseDto;
+import com.ocprojettrois.locationprojettree.Models.Rental.Dto.RentalsResponseDto;
 import com.ocprojettrois.locationprojettree.Models.Rental.Dto.UpdateRentalDto;
 import com.ocprojettrois.locationprojettree.Models.Rental.Rental;
 import com.ocprojettrois.locationprojettree.Models.Rental.RentalResponse;
@@ -21,6 +23,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 
 @RestController
@@ -50,7 +53,7 @@ public class RentalController {
             }
     )
     @GetMapping()
-    public List<Rental> all(){
+    public Stream<RentalsResponseDto> all(){
         return rentalService.all();
     }
 
@@ -69,7 +72,7 @@ public class RentalController {
             }
     )
     @GetMapping("/{id}")
-    public Optional<Rental> detail(@PathVariable Long id){
+    public RentalResponseDto detail(@PathVariable Long id){
         return rentalService.detail(id);
     }
 

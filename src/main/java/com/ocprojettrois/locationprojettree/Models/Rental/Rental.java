@@ -33,6 +33,6 @@ public class Rental {
     private Date created_at;
     //@LastModifiedDate
     //@Column(insertable = false)
-    //@JsonFormat(pattern = "yyyy/MM/dd")
+    @JsonFormat(pattern = "yyyy/MM/dd")
     private Date updated_at;
 }
