@@ -24,7 +24,7 @@ public class Rental {
     private Integer price;
     private String picture;
     private String description;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "owner_id")
     private User user;
     @CreatedDate
